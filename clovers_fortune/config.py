@@ -3,9 +3,11 @@ from clovers.config import config as clovers_config
 
 
 class Config(BaseModel):
-    font: str = "data/fortune/resource/font/sakura.ttf"
-    resorce_path: str = "data/fortune/resource"
-    output_path: str = "data/fortune/output"
+    path: str = "data/fortune"
+    daily_fortune_resorce: str = "data/fortune/daily/basemap/"
+    daily_fortune_title_font: str = "data/fortune/daily/font/Mamelon.otf"
+    daily_fortune_text_font: str = "data/fortune/daily/font/sakura.ttf"
+    tarot_resource: str = "data/fortune/tarot"
 
 
 config_key = __package__

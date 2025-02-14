@@ -1,23 +1,26 @@
 from .config import config as fortune_config
 from .clovers import plugin, Event, Result
-from .core import manager
+from .daily import Manager as FortuneManager
+
+
+fortune_manager = FortuneManager(
+    path=fortune_config.path,
+    resource_path=fortune_config.daily_fortune_resorce,
+    title_font=fortune_config.daily_fortune_title_font,
+    text_font=fortune_config.daily_fortune_text_font,
+)
 
 
 @plugin.handle(["今日运势", "抽签", "运势"], ["group_id", "user_id"])
 async def _(event: Event):
     group_id = event.group_id
     user_id = event.user_id
-    image = manager.cache(group_id, user_id)
-    if image:
+    if result := fortune_manager.get_results(user_id):
         text = "你今天抽过签了，再给你看一次哦🤗"
+        image = fortune_manager.cache(group_id, user_id) or fortune_manager.draw(group_id, user_id, result)
     else:
-        if user_id in manager.results:
-            text = "你今天抽过签了，再给你看一次哦🤗"
-            result = manager.results[user_id]
-        else:
-            text = "✨今日运势✨"
-            result = manager.divine(user_id)
-        image = manager.draw(result, event.group_id)
+        text = "✨今日运势✨"
+        image = fortune_manager.draw(group_id, user_id, fortune_manager.divine(user_id))
     return [Result("at", user_id), text, image]
 
 
@@ -31,17 +34,4 @@ async def _(event: Event):
     return
 
 
-from pathlib import Path
-from clovers.logger import logger
-from clovers_apscheduler import scheduler
-
-output_path = Path(fortune_config.output_path)
-
-
-# 清空昨日生成的图片
-@scheduler.scheduled_job("cron", hour=0, minute=0, misfire_grace_time=60)
-async def _():
-    for group_path in output_path.iterdir():
-        for pic in group_path.iterdir():
-            pic.unlink()
-    logger.info("运势图片缓存已清空")
+__plugin__ = plugin
