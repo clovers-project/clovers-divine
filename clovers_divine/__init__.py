@@ -36,25 +36,34 @@ async def _(event: Event):
     return [Result("at", event.user_id), f"回应是{info}", image]
 
 
+async def segmented_result(result_list: list[Result]):
+    for result in result_list:
+        yield result
+        await asyncio.sleep(2)
+
+
+def send_tarot_divine(result_list: list[Result]) -> Result: ...
+
+
 if fortune_config.tarot_merge_forward:
-    send_tarot_divine = "merge_forward"
+    send_tarot_divine = lambda result_list: Result("merge_forward", result_list)
 else:
-    send_tarot_divine = "list"
+    send_tarot_divine = lambda result_list: Result("segmented", segmented_result(result_list))
 
 
 @plugin.handle(["占卜"], ["user_id"])
 async def _(event: Event):
-    tips, result_list = tarot_manager.divine()
+    tips, tarot_result_list = tarot_manager.divine()
     await event.send(f"启动{tips}，正在洗牌中...")
     theme = tarot_manager.random_theme()
-    result = []
-    for info, pic, flag in result_list:
+    result_list = []
+    for info, pic, flag in tarot_result_list:
         image = tarot_manager.draw(theme, pic, flag)
         if image:
-            result.append(Result("list", [Result("text", info), Result("image", image)]))
+            result_list.append(Result("list", [Result("text", info), Result("image", image)]))
         else:
-            result.append(Result("text", info))
-    return Result(send_tarot_divine, result)
+            result_list.append(Result("text", info))
+    return send_tarot_divine(result_list)
 
 
 __plugin__ = plugin
