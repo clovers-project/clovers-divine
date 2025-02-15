@@ -3,11 +3,11 @@ from clovers.config import config as clovers_config
 
 
 class Config(BaseModel):
-    daily_fortune_data: str = "data/fortune/daily"
-    daily_fortune_resorce: str = "data/fortune/daily/basemap/"
-    daily_fortune_title_font: str = "data/fortune/daily/font/Mamelon.otf"
-    daily_fortune_text_font: str = "data/fortune/daily/font/sakura.ttf"
-    tarot_resource: str = "data/fortune/tarot"
+    daily_fortune_data: str = "data/divine/daily_fortune"
+    daily_fortune_resorce: str = "data/divine/daily_fortune/basemap/"
+    daily_fortune_title_font: str = "data/divine/daily_fortune/font/Mamelon.otf"
+    daily_fortune_text_font: str = "data/divine/daily/font/sakura.ttf"
+    tarot_resource: str = "data/divine/tarot"
     tarot_merge_forward: bool = True
 
 
