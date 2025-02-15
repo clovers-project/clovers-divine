@@ -25,8 +25,26 @@ pip install clovers_divine
 
 <summary>在 clovers 配置文件内按需添加下面的配置项</summary>
 
-```toml
+    daily_fortune_data: str = "data/fortune/daily"
+    daily_fortune_resorce: str = "data/fortune/daily/basemap/"
+    daily_fortune_title_font: str = "data/fortune/daily/font/Mamelon.otf"
+    daily_fortune_text_font: str = "data/fortune/daily/font/sakura.ttf"
+    tarot_resource: str = "data/fortune/tarot"
 
+```toml
+[clovers_divine]
+# 今日运势用户数据路径
+daily_fortune_data = "data/fortune/daily"
+# 今日运势背景资源路径
+daily_fortune_resorce = "data/fortune/daily/basemap/"
+# 今日运势标题字体路径
+daily_fortune_title_font = "data/fortune/daily/font/Mamelon.otf"
+# 今日运势文本字体路径
+daily_fortune_text_font = "data/fortune/daily/font/sakura.ttf"
+# 塔罗牌牌面资源路径
+tarot_resource = "data/fortune/tarot"
+# 塔罗牌合并转发开关
+tarot_merge_forward = true
 ```
 
 </details>

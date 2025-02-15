@@ -36,13 +36,13 @@ async def _(event: Event):
     return [Result("at", event.user_id), f"回应是{info}", image]
 
 
-async def async_generator(result: list):
-    for i in result:
-        yield i
-        await asyncio.sleep(1)
+if fortune_config.tarot_merge_forward:
+    send_tarot_divine = "merge_forward"
+else:
+    send_tarot_divine = "list"
 
 
-@plugin.handle(["占卜"], ["group_id", "user_id"])
+@plugin.handle(["占卜"], ["user_id"])
 async def _(event: Event):
     tips, result_list = tarot_manager.divine()
     await event.send(f"启动{tips}，正在洗牌中...")
@@ -54,10 +54,7 @@ async def _(event: Event):
             result.append(Result("list", [Result("text", info), Result("image", image)]))
         else:
             result.append(Result("text", info))
-    if event.group_id:
-        return Result("group_forward", result)
-    else:
-        return Result("segmented", async_generator(result))
+    return Result(send_tarot_divine, result)
 
 
 __plugin__ = plugin

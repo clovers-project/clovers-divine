@@ -8,6 +8,7 @@ class Config(BaseModel):
     daily_fortune_title_font: str = "data/fortune/daily/font/Mamelon.otf"
     daily_fortune_text_font: str = "data/fortune/daily/font/sakura.ttf"
     tarot_resource: str = "data/fortune/tarot"
+    tarot_merge_forward: bool = True
 
 
 config_key = __package__
