@@ -118,5 +118,7 @@ tarot_merge_forward = true
 # 鸣谢
 
 [nonebot_plugin_fortune](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune)
+
 [nonebot_plugin_tarot](https://github.com/MinatoAquaCrews/nonebot_plugin_tarot)
+
 [nonebot_plugin_batarot](https://github.com/Perseus037/nonebot_plugin_batarot)
