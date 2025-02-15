@@ -29,7 +29,7 @@ class Copywriting(BaseModel):
 class Manager:
     def __init__(
         self,
-        path: Path | str,
+        data_path: Path | str,
         resource_path: Path | str,
         title_font: Path | str,
         text_font: Path | str,
@@ -38,17 +38,17 @@ class Manager:
         path: Path 实例数据路径
         resource_path: Path 背景资源路径
         """
-        if isinstance(path, str):
-            path = Path(path)
-        self.data_file = path / "fortune_data.json"
+        resource = Path(__file__).parent / "resource" / "copywriting.json"
+        with resource.open("r", encoding="utf-8") as f:
+            self.copywriting = [Copywriting.model_validate(x) for x in json.load(f)["copywriting"]]
+        if isinstance(data_path, str):
+            data_path = Path(data_path)
+        self.data_file = data_path / "fortune_data.json"
         if self.data_file.exists():
             self.data = Data.model_validate_json(self.data_file.read_text(encoding="utf-8"))
         else:
             self.data = Data()
-        copywriting = Path(__file__).parent / "resource" / "copywriting.json"
-        with copywriting.open("r", encoding="utf-8") as f:
-            self.copywriting = [Copywriting.model_validate(x) for x in json.load(f)["copywriting"]]
-        self.cache_path = path / "cache"
+        self.cache_path = data_path / "cache"
         if isinstance(resource_path, str):
             resource_path = Path(resource_path)
         if not self.cache_path.parent.exists():

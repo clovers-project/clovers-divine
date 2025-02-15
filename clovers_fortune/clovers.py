@@ -19,6 +19,11 @@ class Event:
     def group_id(self) -> str:
         return self.event.properties["group_id"]
 
+    async def send(self, message):
+        result = build_result(message)
+        if result:
+            await self.event.call(result.send_method, result.data)
+
 
 def build_result(result):
     if isinstance(result, Result):
@@ -28,7 +33,7 @@ def build_result(result):
     if isinstance(result, BytesIO):
         return Result("image", result)
     if isinstance(result, list):
-        return Result("list", [build_result(seg) for seg in result])
+        return Result("list", [build_result(seg) for seg in result if seg])
 
 
 plugin = Plugin(build_event=lambda event: Event(event), build_result=build_result, priority=10)
