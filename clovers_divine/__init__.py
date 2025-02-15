@@ -1,7 +1,7 @@
 import asyncio
 from .config import config as fortune_config
-from .clovers import plugin, Event, Result, build_result
-from .daily import Manager as FortuneManager
+from .clovers import plugin, Event, Result
+from .daily_fortune import Manager as FortuneManager
 from .tarot import Manager as TarotManager
 
 fortune_manager = FortuneManager(

@@ -1,21 +1,22 @@
 <div align="center">
 
-# Clovers Fortune
+# Clovers Divine
 
 _✨ 今日运势和塔罗牌占卜合集 ✨_
 
-[![python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
-[![license](https://img.shields.io/github/license/KarisAya/clovers_fortune.svg)](./LICENSE)
-[![pypi](https://img.shields.io/pypi/v/clovers_fortune.svg)](https://pypi.python.org/pypi/clovers_fortune)
-[![pypi download](https://img.shields.io/pypi/dm/clovers_fortune)](https://pypi.python.org/pypi/clovers_fortune)
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
+[![pypi](https://img.shields.io/pypi/v/clovers_divine.svg)](https://pypi.python.org/pypi/clovers_divine)
+[![pypi download](https://img.shields.io/pypi/dm/clovers_divine)](https://pypi.python.org/pypi/clovers_divine)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
+[![Github](https://img.shields.io/badge/GitHub-Clovers-00CC33?logo=github)](https://github.com/clovers-project/clovers)
+[![license](https://img.shields.io/github/license/clovers-project/clovers-divine.svg)](./LICENSE)
 
 </div>
 
 # 安装
 
 ```bash
-pip install clovers_fortune
+pip install clovers_divine
 ```
 
 # 配置
@@ -28,6 +29,7 @@ pip install clovers_fortune
 
 ```
 
+</details>
 # 说明
 
 今日运势和 id 绑定

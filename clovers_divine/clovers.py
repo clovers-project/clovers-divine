@@ -1,4 +1,3 @@
-from collections.abc import AsyncGenerator
 from io import BytesIO
 from clovers import Event as CloversEvent, Result, Plugin
 
