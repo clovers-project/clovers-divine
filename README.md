@@ -65,8 +65,6 @@ tarot_merge_forward = true
 
 ## 塔罗牌资源
 
-注意：资源中塔罗牌[碧蓝档案主题](./fortune/tarot/Blue%20Archive/) 依照原仓库 [GPL-3.0](https://github.com/Perseus037/nonebot_plugin_batarot?tab=GPL-3.0-1-ov-file#readme) 协议开源，其余资源遵循 [MIT](https://github.com/KarisAya/clovers_fortune/blob/main/LICENSE) 协议开源
-
 本插件会认为 `tarot_resource` 路径下的每个文件夹都是一套主题。
 
 插件会遍历主题路径下所有 `.png` `.jpg` `.jpeg` 文件作为塔罗牌卡面，但建议主题下的文件夹有如下子路径
@@ -115,7 +113,12 @@ tarot_merge_forward = true
 
 请注意资源内至少要有一套完整的塔罗牌主题。
 
-# 鸣谢
+# 著作权信息
+
+- `copywriting.json` by KafCoppelia (MIT License)
+- `tarot.json` by KafCoppelia (MIT License)
+
+**本仓库 divine 路径内的的资源来自以下项目，感谢各位原作者！**
 
 [nonebot_plugin_fortune](https://github.com/MinatoAquaCrews/nonebot_plugin_fortune)
 
