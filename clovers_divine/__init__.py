@@ -1,4 +1,5 @@
 import asyncio
+from clovers.logger import logger
 from .config import config as fortune_config
 from .clovers import plugin, Event, Result
 from .daily_fortune import Manager as FortuneManager
@@ -16,12 +17,15 @@ fortune_manager = FortuneManager(
 async def _(event: Event):
     group_id = event.group_id
     user_id = event.user_id
-    if result := fortune_manager.get_results(user_id):
-        text = "你今天抽过签了，再给你看一次哦🤗"
-        image = fortune_manager.cache(group_id, user_id) or fortune_manager.draw(group_id, user_id, result)
+    if image := fortune_manager.cache(group_id, user_id):
+        text = "你今天在本群已经抽过签了，再给你看一次哦🤗"
+    elif result := fortune_manager.get_results(user_id):
+        text = "你今天已经抽过签了，再给你看一次哦🤗"
+        image = fortune_manager.draw(group_id, user_id, result)
     else:
         text = "✨今日运势✨"
-        image = fortune_manager.draw(group_id, user_id, fortune_manager.divine(user_id))
+        result = fortune_manager.divine(user_id)
+        image = fortune_manager.draw(group_id, user_id, result)
     return [Result("at", user_id), text, image]
 
 

@@ -53,10 +53,22 @@ class Manager:
             resource_path = Path(resource_path)
         if not self.cache_path.parent.exists():
             self.cache_path.parent.mkdir(exist_ok=True, parents=True)
-        resource_path.iterdir
-        self.basemaps = [file for file in resource_path.rglob("*") if file.suffix.lower() in {".jpg", ".jpeg", ".png"}]
+        self.basemaps = [
+            [file for file in theme.rglob("*") if file.suffix.lower() in {".jpg", ".jpeg", ".png"}]
+            for theme in resource_path.iterdir()
+            if theme.is_dir()
+        ]
         self.title_font = ImageFont.truetype(title_font, 45)
         self.text_font = ImageFont.truetype(text_font, 25)
+
+    def cache(self, group_id: str, user_id: str) -> None | BytesIO:
+        file = self.data.cache.setdefault(group_id, {}).get(user_id)
+        if file is None:
+            return
+        if not file.exists():
+            return
+        if file.stat().st_mtime >= date.today().toordinal():
+            return BytesIO(file.read_bytes())
 
     def get_results(self, user_id: str) -> DailyFortuneResult | None:
         """获取今天的运势结果"""
@@ -76,22 +88,14 @@ class Manager:
     def draw(self, group_id: str, user_id: str, result: DailyFortuneResult) -> BytesIO:
         image_file = self.cache_path / f"{group_id}_{user_id}.png"
         self.data.cache.setdefault(group_id, {})[user_id] = image_file
-        basemap = random.choice(self.basemaps)
+        theme = random.choice(self.basemaps)
+        basemap = random.choice(theme)
         image = drawing(result, basemap, self.title_font, self.text_font)
         if not image_file.parent.exists():
             image_file.parent.mkdir(exist_ok=True, parents=True)
         image_file.write_bytes(image.getvalue())
         self.data.save(self.data_file)
         return image
-
-    def cache(self, group_id: str, user_id: str) -> None | BytesIO:
-        file = self.data.cache.setdefault(group_id, {}).get(user_id)
-        if file is None:
-            return
-        if not file.exists():
-            return
-        with file.open("rb") as f:
-            return BytesIO(f.read())
 
 
 def drawing(
