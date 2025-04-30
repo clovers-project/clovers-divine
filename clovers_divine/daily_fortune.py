@@ -63,11 +63,7 @@ class Manager:
 
     def cache(self, group_id: str, user_id: str) -> None | BytesIO:
         file = self.data.cache.setdefault(group_id, {}).get(user_id)
-        if file is None:
-            return
-        if not file.exists():
-            return
-        if file.stat().st_mtime >= date.today().toordinal():
+        if file is not None and file.exists() and date.fromtimestamp(file.stat().st_mtime) == date.today():
             return BytesIO(file.read_bytes())
 
     def get_results(self, user_id: str) -> DailyFortuneResult | None:
