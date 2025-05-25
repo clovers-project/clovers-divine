@@ -83,7 +83,7 @@ class Manager:
         for i, tips in enumerate(representations, 1):
             card, explain, pic, flag = self.tarot()
             title = "切牌" if formation.cards_num == i and formation.is_cut else f"第{i}张牌"
-            result_list.append((f"{title}{tips}{card}", explain, pic, flag))
+            result_list.append((f"{title} {tips}{card}", explain, pic, flag))
         return formation.key, result_list
 
     def draw(self, theme: str, pic: str, flag: bool):
