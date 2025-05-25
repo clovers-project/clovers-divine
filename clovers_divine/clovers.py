@@ -1,27 +1,22 @@
 from io import BytesIO
-from clovers import Event as CloversEvent, Result, Plugin
+from clovers import Result, Plugin
+from io import BytesIO
+from clovers import EventProtocol, Result, Plugin
+from typing import Protocol, Literal, overload
 
 
-class Event:
-    def __init__(self, event: CloversEvent):
-        self.event: CloversEvent = event
+class Event(EventProtocol, Protocol):
+    user_id: str
+    group_id: str | None
 
-    @property
-    def command(self) -> str:
-        return self.event.raw_command
+    @overload
+    async def call(self, key: Literal["text"], message: str): ...
 
-    @property
-    def user_id(self) -> str:
-        return self.event.properties["user_id"]
+    @overload
+    async def call(self, key: Literal["image"], message: BytesIO | bytes): ...
 
-    @property
-    def group_id(self) -> str:
-        return self.event.properties["group_id"]
-
-    async def send(self, message):
-        result = build_result(message)
-        if result:
-            await self.event.call(result.send_method, result.data)
+    @overload
+    async def call(self, key: Literal["list"], message: list[Result]): ...
 
 
 def build_result(result):
@@ -35,4 +30,7 @@ def build_result(result):
         return Result("list", [build_result(seg) for seg in result if seg])
 
 
-plugin = Plugin(build_event=lambda event: Event(event), build_result=build_result, priority=10)
+def create_plugin() -> Plugin:
+    plugin = Plugin(build_result=build_result, priority=10)
+    plugin.set_protocol("properties", Event)
+    return plugin
