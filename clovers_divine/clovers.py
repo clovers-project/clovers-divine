@@ -8,6 +8,7 @@ from typing import Protocol, Literal, overload
 class Event(EventProtocol, Protocol):
     user_id: str
     group_id: str | None
+    tarot: None
 
     @overload
     async def call(self, key: Literal["text"], message: str): ...

@@ -55,10 +55,11 @@ async def _(event: Event):
 
 @plugin.handle(["塔罗牌"], ["user_id"])
 async def _(event: Event):
-    info, pic, flag = tarot_manager.tarot()
+    card, explain, pic, flag = tarot_manager.tarot()
+    event.properties["tarot"] = card
     theme = tarot_manager.random_theme()
     image = tarot_manager.draw(theme, pic, flag)
-    return [Result("at", event.user_id), f"回应是{info}", image]
+    return [Result("at", event.user_id), f"回应是{card}{explain}", image]
 
 
 @plugin.handle(["占卜"], ["user_id"])
@@ -67,12 +68,15 @@ async def _(event: Event):
     await event.call("text", f"启动{tips}，正在洗牌中...")
     theme = tarot_manager.random_theme()
     result_list = []
-    for info, pic, flag in tarot_result_list:
+    infos = []
+    for info, explain, pic, flag in tarot_result_list:
+        infos.append(info)
         image = tarot_manager.draw(theme, pic, flag)
         if image:
-            result_list.append(Result("list", [Result("text", info), Result("image", image)]))
+            result_list.append(Result("list", [Result("text", f"{info}{explain}"), Result("image", image)]))
         else:
-            result_list.append(Result("text", info))
+            result_list.append(Result("text", f"{info}{explain}"))
+    event.properties["tarot"] = ",".join(infos)
     return send_tarot_divine(result_list)
 
 

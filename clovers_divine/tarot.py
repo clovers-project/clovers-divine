@@ -6,7 +6,8 @@ from typing import TypedDict
 from pydantic import BaseModel
 from PIL import Image
 
-type TarotResult = tuple[str, str, bool]
+type TarotResult = tuple[str, str, str, bool]
+"""info:塔罗牌信息 explain:塔罗牌解读 pic:塔罗牌图片 flag:是否正位"""
 
 
 class TarotFormations(BaseModel):
@@ -63,26 +64,26 @@ class Manager:
     def tarot(self) -> TarotResult:
         """
         抽一张塔罗牌
-        return:
-            info:塔罗牌信息
-            pic:塔罗牌图片
-            flag:是否正位
+
+        Return:
+
+            TarotResult
         """
 
         card = random.choice(self.cards)
         if random.random() < 0.5:
-            return f'「{card.name_cn}逆位」「{card.meaning["down"]}」', card.pic, False
+            return f"「{card.name_cn}逆位」", f"「{card.meaning["down"]}」", card.pic, False
         else:
-            return f'「{card.name_cn}正位」「{card.meaning["up"]}」', card.pic, True
+            return f"「{card.name_cn}正位」", f"「{card.meaning["up"]}」", card.pic, True
 
     def divine(self) -> tuple[str, list[TarotResult]]:
         formation = random.choice(self.formations)
         representations = random.choice(formation.representations)
         result_list = []
         for i, tips in enumerate(representations, 1):
-            info, pic, flag = self.tarot()
+            card, explain, pic, flag = self.tarot()
             title = "切牌" if formation.cards_num == i and formation.is_cut else f"第{i}张牌"
-            result_list.append((f"{title}「{tips}」{info}", pic, flag))
+            result_list.append((f"{title}{tips}{card}", explain, pic, flag))
         return formation.key, result_list
 
     def draw(self, theme: str, pic: str, flag: bool):
