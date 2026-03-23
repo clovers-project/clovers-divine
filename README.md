@@ -13,6 +13,17 @@ _✨ 今日运势和塔罗牌占卜合集 ✨_
 
 </div>
 
+# 与 CloversAgent 联动
+
+如果安装了 [CloversAgent](https://github.com/clovers-project/clovers-agent) `占卜` 和 `塔罗牌` 指令会与 CloversAgent 联动。
+
+效果如下：
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/main/attachments/screenshot_1.png" width="45%" />
+  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/main/attachments/screenshot_2.png" width="45%" />
+</div>
+
 # 安装
 
 ```bash
