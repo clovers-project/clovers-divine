@@ -20,8 +20,8 @@ _✨ 今日运势和塔罗牌占卜合集 ✨_
 效果如下：
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/main/attachments/screenshot_1.png" width="45%" />
-  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/main/attachments/screenshot_2.png" width="45%" />
+  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/refs/heads/master/attachment/screenshot_1.png" width="45%" />
+  <img src="https://raw.githubusercontent.com/clovers-project/clovers-divine/refs/heads/master/attachment/screenshot_2.png" width="45%" />
 </div>
 
 # 安装
